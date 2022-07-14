@@ -46,13 +46,49 @@ function App() {
 
   const handler = ({ key }) => {
     if (ENTER_KEYS.includes(String(key))) {
+      // collect by date in 2D array
+      let byDate = {}
       events.forEach((event) => {
-        const start = moment(event.start).format("ddd (M/D): H:mma")
-        const end = moment(event.end).format("H:mma zz")
-        //const timezone = moment.tz.Zone.abbr
-        const timezone = moment().tz(moment.tz.guess()).format('z');
-        const range = `${start}-${end} ${timezone}`
-        console.log(range)
+        const key = moment(event.start).format("MM/DD")
+        if (!(key in byDate)) byDate[key] = []
+        byDate[key].push(event)
+      })
+
+      // sort events by start time
+      Object.values(byDate).forEach((eventArray) => {
+        eventArray.sort((a, b) => b.start - a.start)
+      })
+
+      // format line for each day
+      let availabilities = []
+      Object.values(byDate).forEach((eventArray) => {
+        let line = ""
+        eventArray.forEach(function(event, idx, array){
+          const start = moment(event.start).format("h:mma")
+          const end = moment(event.end).format("h:mma zz")
+          // If its the first event of the day
+          if (idx === 0){ 
+            const dayStart = moment(event.start).format("ddd (M/D): ")
+            line = dayStart
+          }
+
+          line += `${start}-${end}`
+          // if it's not the last event, comma separate
+          if (idx !== array.length - 1){ 
+            line = line.trimEnd() + `, `
+          }
+
+          // If its the last event of the day
+          if (idx === array.length - 1){ 
+            const timezone = moment().tz(moment.tz.guess()).format('z');
+            line = line.trimEnd() + ` ${timezone}`
+          }
+        })
+        availabilities.push(line)
+      })
+
+      availabilities.forEach((day) => {
+        console.log(day)
       })
     }
   };
