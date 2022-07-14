@@ -11,18 +11,18 @@ function App() {
   const [events, setEvents] = useState([])
 
   const createEvent = ( selectionInfo ) => {
-    console.log("HERE")
     const start = selectionInfo.start
     const end = selectionInfo.end
 
-    var abc = prompt('Enter Title')
-    var allDay = !start.hasTime && !end.hasTime
+    //var abc = prompt('Enter Title')
+    var allDay = selectionInfo.allDay
     var newEvent = new Object()
-    newEvent.title = abc
+    //newEvent.title = abc
     newEvent.start = moment(start).format()
-    newEvent.allDay = false
-    console.log(newEvent)
-    setEvents(events.push(newEvent))
+    newEvent.end = moment(end).format()
+    newEvent.allDay = allDay;
+    const newEvents = events.concat([newEvent])
+    setEvents(newEvents)
   }
 
   const handleDateClick = ( arg ) => { // bind with an arrow function
