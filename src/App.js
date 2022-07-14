@@ -1,4 +1,5 @@
 import './App.css'
+import 'react-notifications/lib/notifications.css';
 import React, { useState, useEffect, useRef } from 'react'
 //import moment from 'moment'
 //import momenttz from 'moment-timezone'
@@ -7,6 +8,7 @@ import FullCalendar from '@fullcalendar/react' // must go before plugins
 // calendar plugins
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 // From: https://thewebdev.info/2021/05/24/how-to-listen-for-key-press-for-document-in-react-js/#:~:text=js-,To%20listen%20for%20keypresses%20on%20the%20whole%20document%20in%20React,document%20in%20the%20useEffect%20hook.&text=We%20create%20the%20useEventListener%20hook,eventName%20is%20the%20event%20name.
 const useEventListener = (eventName, handler, element = window) => {
@@ -99,6 +101,7 @@ function App() {
 
       // Copy the availabilities to the clipboard
       navigator.clipboard.writeText(availabilityText);
+      NotificationManager.success('Availabilities copied to clipboard', 'Copied!');
     }
   };
 
@@ -107,11 +110,13 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Select your availabilities and hit enter to copy to clipboard</h1>
       <FullCalendar
-        plugins={[ timeGridPlugin, interactionPlugin ]}
-        initialView='timeGridWeek'
-        slotMinTime="07:00:00"
-        slotMaxTime="20:00:00"
+        plugins={[timeGridPlugin, interactionPlugin]}
+        initialView="timeGridWeek"
+        scrollTime="07:00:00"
+        slotMinTime="00:00:00"
+        slotMaxTime="24:00:00"
         selectable={true}
         editable={true}
         eventResizableFromStart={true}
@@ -119,8 +124,9 @@ function App() {
         timezone="PDT"
         events={events}
       />
+      <NotificationContainer />
     </div>
-  )
+  );
 }
 
 export default App
