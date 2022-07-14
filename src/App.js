@@ -87,9 +87,18 @@ function App() {
         availabilities.push(line)
       })
 
-      availabilities.forEach((day) => {
-        console.log(day)
+      let availabilityText = ""
+      availabilities.forEach(function(day, idx, array){
+        // if it's not the last day, new line separate
+        if (idx !== array.length - 1){ 
+          availabilityText += `${day}\n`
+        } else {
+          availabilityText += `${day}`
+        }
       })
+
+      // Copy the availabilities to the clipboard
+      navigator.clipboard.writeText(availabilityText);
     }
   };
 
