@@ -5,7 +5,7 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './routes/login'
-import SignUp from './routes/signup'
+import SignUp from './routes/signup.jsx'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
