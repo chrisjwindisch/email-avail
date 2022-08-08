@@ -13,10 +13,18 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Copyright from '../components/copyright'
+import LoadingButton from '@mui/lab/LoadingButton'
 
 const theme = createTheme()
 
-export default function SignUp() {
+export default function SignUp({
+  user,
+  signOut,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  error,
+  loading,
+}) {
   const handleSubmit = (event) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
@@ -94,9 +102,18 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-              Sign Up
-            </Button>
+            {loading ? (
+              <LoadingButton></LoadingButton>
+            ) : (
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={() => signInWithEmailAndPassword(email, password)}>
+                Sign Up
+              </Button>
+            )}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/login" variant="body2">
