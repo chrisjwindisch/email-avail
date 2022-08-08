@@ -1,5 +1,9 @@
 import './App.css'
 import 'react-notifications/lib/notifications.css'
+import '@fontsource/roboto/300.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/700.css'
 import React, { useState, useEffect, useRef } from 'react'
 //import moment from 'moment'
 //import momenttz from 'moment-timezone'
@@ -9,10 +13,7 @@ import FullCalendar from '@fullcalendar/react' // must go before plugins
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import '@fontsource/roboto/300.css'
-import '@fontsource/roboto/400.css'
-import '@fontsource/roboto/500.css'
-import '@fontsource/roboto/700.css'
+import { Link } from 'react-router-dom'
 
 // From: https://thewebdev.info/2021/05/24/how-to-listen-for-key-press-for-document-in-react-js/#:~:text=js-,To%20listen%20for%20keypresses%20on%20the%20whole%20document%20in%20React,document%20in%20the%20useEffect%20hook.&text=We%20create%20the%20useEventListener%20hook,eventName%20is%20the%20event%20name.
 const useEventListener = (eventName, handler, element = window) => {
@@ -114,8 +115,8 @@ function App() {
   return (
     <div className="App">
       <h1>Select your availabilities and hit enter to copy to clipboard</h1>
-      <button>Login</button>
-      <button>Signup</button>
+      <Link to="/login">Login</Link>
+      <Link to="/signup">Signup</Link>
       <FullCalendar
         plugins={[timeGridPlugin, interactionPlugin]}
         initialView="timeGridWeek"
