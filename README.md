@@ -9,6 +9,11 @@ Drag select available times and click enter to save to clipboard
 
 # TODO
 ## web-app-bootstrap
+- install MUI
+- Get login / create account pages displaying
+- Hook up to FB Auth
+
+
 0. Buy domain and setup Firebase project with that domain
 1. Get non-logged in page hosted on Google
 1.5 Change timezone
@@ -44,3 +49,8 @@ Drag select available times and click enter to save to clipboard
 
 # V2
 - Gmail browser extension with [gmail.js](https://github.com/KartikTalwar/gmail.js/tree/master#gmailtoolsadd_compose_buttoncompose_ref-content_html-onclick_action-custom_style_class)
+
+# Promote
+## People who might like this lifehack
+https://chromeunboxed.com/create-custom-shortcuts-in-chrome-for-any-website/
+Indie Hackers
