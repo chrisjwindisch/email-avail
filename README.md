@@ -9,7 +9,6 @@ Drag select available times and click enter to save to clipboard
 
 # TODO
 ## web-app-bootstrap
-- install MUI
 - Get login / create account pages displaying
 - Hook up to FB Auth
 
