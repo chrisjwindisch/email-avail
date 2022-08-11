@@ -15,7 +15,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import momentTimezonePlugin from '@fullcalendar/moment-timezone'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router-dom'
-import { Autocomplete, Box, TextField } from '@mui/material'
+import { Autocomplete, Box, Button, Modal, TextField, Typography } from '@mui/material'
 
 // From: https://thewebdev.info/2021/05/24/how-to-listen-for-key-press-for-document-in-react-js/#:~:text=js-,To%20listen%20for%20keypresses%20on%20the%20whole%20document%20in%20React,document%20in%20the%20useEffect%20hook.&text=We%20create%20the%20useEventListener%20hook,eventName%20is%20the%20event%20name.
 const useEventListener = (eventName, handler, element = window) => {
@@ -37,6 +37,7 @@ const useEventListener = (eventName, handler, element = window) => {
 function App() {
   const [events, setEvents] = useState([])
   const [timezone, setTimezone] = useState(moment.tz.guess())
+  const [showFeatureModal, setShowFeatureModal] = useState(false)
   const ENTER_KEYS = ['13', 'Enter']
 
   const createEvent = (selectionInfo) => {
@@ -113,6 +114,18 @@ function App() {
     }
   }
 
+  const modalBoxStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  }
+
   useEventListener('keydown', handler)
   const timezones = moment.tz.names()
 
@@ -122,7 +135,11 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={{
+        margin: 10,
+      }}>
       <h1>Select your availabilities and hit enter to copy to clipboard</h1>
       <Link to="/login">Login</Link>
       <Link to="/signup">Signup</Link>
@@ -130,12 +147,23 @@ function App() {
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'row-reverse',
+            alignItems: 'flex-end',
+            flexDirection: 'column',
           }}>
+          <Link
+            to="#"
+            style={{
+              margin: 10,
+            }}
+            onClick={() => {
+              setShowFeatureModal(true)
+            }}>
+            Request a feature
+          </Link>
           <Autocomplete
             disablePortal
             options={timezones}
-            sx={{ width: 300 }}
+            sx={{ width: 300, marginBottom: 2 }}
             renderInput={(params) => <TextField {...params} label="Timezone" />}
             onChange={onChangeTimezone}
             defaultValue={timezone}
@@ -157,6 +185,46 @@ function App() {
         events={events}
       />
       <NotificationContainer />
+      <Modal
+        open={showFeatureModal}
+        onClose={() => {
+          setShowFeatureModal(false)
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={modalBoxStyle}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            style={{ marginBottom: 5 }}>
+            Request a feature
+          </Typography>
+          <TextField
+            id="outlined-multiline-static"
+            multiline
+            style={{
+              width: '100%',
+            }}
+            rows={4}
+            placeholder="It would be awesome if you add a feature to..."
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row-reverse',
+              marginTop: 2,
+            }}>
+            <Button
+              onClick={() => {
+                setShowFeatureModal(false)
+                NotificationManager.success('Feature Requeset Submitted', 'Thank You!')
+              }}>
+              Submit
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </div>
   )
 }
