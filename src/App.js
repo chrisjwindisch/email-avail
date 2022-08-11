@@ -91,8 +91,8 @@ function App() {
 
           // If its the last event of the day
           if (idx === array.length - 1) {
-            const timezone = moment().tz(moment.tz.guess()).format('z')
-            line = line.trimEnd() + ` ${timezone}`
+            const tz = moment().tz(timezone).zoneAbbr()
+            line = line.trimEnd() + ` ${tz}`
           }
         })
         availabilities.push(line)
