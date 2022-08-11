@@ -9,6 +9,7 @@ Drag select available times and click enter to save to clipboard
 
 # TODO
 ## web-app-bootstrap
+- Currently trying to get react-firebase-auth to work with the project but its looking for index.tsx, might need to use a different package
 - Hook up to FB Auth
 
 
@@ -26,6 +27,7 @@ Drag select available times and click enter to save to clipboard
 6.1 /home for displaying default calendar's first 3 weeks if user is logged in
 6.5 preloading logic for +3 weeks of events
 7. Change calendar drop down
+8. Put on CDN and optimize cache settings so its instantaneous to load, otherwise it'd be faster to type
 ## web-app-bootstrap
 - /frontend
   - react

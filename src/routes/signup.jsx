@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -17,14 +17,10 @@ import LoadingButton from '@mui/lab/LoadingButton'
 
 const theme = createTheme()
 
-export default function SignUp({
-  user,
-  signOut,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  error,
-  loading,
-}) {
+export default function SignUp({ signInWithEmailAndPassword, loading }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
   const handleSubmit = (event) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
@@ -82,6 +78,7 @@ export default function SignUp({
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -93,6 +90,7 @@ export default function SignUp({
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>

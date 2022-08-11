@@ -7,10 +7,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './routes/login'
 import SignUp from './routes/signup.jsx'
 import withFirebaseAuth from 'react-with-firebase-auth'
-import firebase from 'firebase'
 import firebaseConfig from './firebaseConfig'
+import { initializeApp } from 'firebase/app'
 
-const firebaseApp = firebase.initializeApp(firebaseConfig)
+const firebaseApp = initializeApp(firebaseConfig)
 const providers = {
   //googleProvider: new firebase.auth.GoogleAuthProvider(),
 }
