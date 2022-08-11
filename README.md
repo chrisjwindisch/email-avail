@@ -13,8 +13,6 @@ Drag select available times and click enter to save to clipboard
 - Hook up to FB Auth
 
 
-0. Buy domain and setup Firebase project with that domain
-1. Get non-logged in page hosted on Google
 1.5 Change timezone
 1.6 Request Feature Popup
 1.7 Request Feature Lambda

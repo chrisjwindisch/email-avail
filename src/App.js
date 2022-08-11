@@ -12,8 +12,10 @@ import FullCalendar from '@fullcalendar/react' // must go before plugins
 // calendar plugins
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import momentTimezonePlugin from '@fullcalendar/moment-timezone'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router-dom'
+import { Autocomplete, Box, TextField } from '@mui/material'
 
 // From: https://thewebdev.info/2021/05/24/how-to-listen-for-key-press-for-document-in-react-js/#:~:text=js-,To%20listen%20for%20keypresses%20on%20the%20whole%20document%20in%20React,document%20in%20the%20useEffect%20hook.&text=We%20create%20the%20useEventListener%20hook,eventName%20is%20the%20event%20name.
 const useEventListener = (eventName, handler, element = window) => {
@@ -34,6 +36,7 @@ const useEventListener = (eventName, handler, element = window) => {
 
 function App() {
   const [events, setEvents] = useState([])
+  const [timezone, setTimezone] = useState(moment.tz.guess())
   const ENTER_KEYS = ['13', 'Enter']
 
   const createEvent = (selectionInfo) => {
@@ -111,14 +114,37 @@ function App() {
   }
 
   useEventListener('keydown', handler)
+  const timezones = moment.tz.names()
+
+  const onChangeTimezone = (event, value) => {
+    console.log('setTimezone')
+    setTimezone(value)
+  }
 
   return (
     <div className="App">
       <h1>Select your availabilities and hit enter to copy to clipboard</h1>
       <Link to="/login">Login</Link>
       <Link to="/signup">Signup</Link>
+      <div style={{ width: '100%' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row-reverse',
+          }}>
+          <Autocomplete
+            disablePortal
+            options={timezones}
+            sx={{ width: 300 }}
+            renderInput={(params) => <TextField {...params} label="Timezone" />}
+            onChange={onChangeTimezone}
+            defaultValue={timezone}
+          />
+        </Box>
+      </div>
+
       <FullCalendar
-        plugins={[timeGridPlugin, interactionPlugin]}
+        plugins={[timeGridPlugin, interactionPlugin, momentTimezonePlugin]}
         initialView="timeGridWeek"
         scrollTime="07:00:00"
         slotMinTime="00:00:00"
@@ -127,7 +153,7 @@ function App() {
         editable={true}
         eventResizableFromStart={true}
         select={createEvent}
-        timezone="PDT"
+        timeZone={timezone}
         events={events}
       />
       <NotificationContainer />

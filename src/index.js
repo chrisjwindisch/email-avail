@@ -6,26 +6,22 @@ import reportWebVitals from './reportWebVitals'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './routes/login'
 import SignUp from './routes/signup.jsx'
-import withFirebaseAuth from 'react-with-firebase-auth'
+/*
 import firebaseConfig from './firebaseConfig'
 import { initializeApp } from 'firebase/app'
 
 const firebaseApp = initializeApp(firebaseConfig)
-const providers = {
-  //googleProvider: new firebase.auth.GoogleAuthProvider(),
-}
 
 const firebaseAppAuth = firebaseApp.auth()
 
-const createComponentWithAuth = withFirebaseAuth({
-  providers,
-  firebaseAppAuth,
-})
+const FirebaseSignUp = createComponentWithAuth(SignUp)
+const FirebaseLogin = createComponentWithAuth(Login)
+*/
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
-const FirebaseSignUp = createComponentWithAuth(SignUp)
-const FirebaseLogin = createComponentWithAuth(Login)
+const FirebaseSignUp = SignUp
+const FirebaseLogin = Login
 
 root.render(
   <React.StrictMode>
