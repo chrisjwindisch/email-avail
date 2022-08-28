@@ -1,8 +1,8 @@
 const config = {
-  apiUrl: 'https://us-central1-email-avail.cloudfunctions.net',
+  apiUrl: 'https://quickavail.pro',
 }
 export default config
 
 export function api(route) {
-  return `${config}/${route}`
+  return `${config.apiUrl}/${route}`
 }

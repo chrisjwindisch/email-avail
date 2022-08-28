@@ -75,7 +75,9 @@ function App() {
   }
 
   const handler = ({ key }) => {
-    if (ENTER_KEYS.includes(String(key))) {
+    // Don't use enter to copy availability data if the feature modal is open
+    // because the person is probably just doing new lines in the message
+    if (!showFeatureModal && ENTER_KEYS.includes(String(key))) {
       // collect by date in 2D array
       let byDate = {}
       events.forEach((event) => {
@@ -164,8 +166,8 @@ function App() {
       },
       body: JSON.stringify(formValues),
     })
-    const res = response.json() // parses JSON response into native JavaScript objects
-    if (res.success === true) {
+    const res = await response.json()
+    if (res.success == true) {
       NotificationManager.success('Feature Requeset Submitted', 'Thank You!')
     } else {
       NotificationManager.error('Error submitting feature request, please try again.', 'Error')
