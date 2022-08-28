@@ -8,7 +8,9 @@ exports.requestFeature = functions.https.onRequest((request, response) => {
     if (request.method !== 'POST') {
       throw new Error('Unsupported method')
     }
-    const message = `Message Body:
+    const message = `
+    Email: ${request.body.email}
+    Message Body:
       ${request.body.message}
     `
     //@TODO: Add user's email as reply-to

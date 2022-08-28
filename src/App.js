@@ -16,6 +16,8 @@ import momentTimezonePlugin from '@fullcalendar/moment-timezone'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router-dom'
 import { Autocomplete, Box, Button, Modal, TextField, Typography } from '@mui/material'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
 
 // From: https://thewebdev.info/2021/05/24/how-to-listen-for-key-press-for-document-in-react-js/#:~:text=js-,To%20listen%20for%20keypresses%20on%20the%20whole%20document%20in%20React,document%20in%20the%20useEffect%20hook.&text=We%20create%20the%20useEventListener%20hook,eventName%20is%20the%20event%20name.
 const useEventListener = (eventName, handler, element = window) => {
@@ -38,6 +40,7 @@ function App() {
   const [events, setEvents] = useState([])
   const [timezone, setTimezone] = useState(moment.tz.guess())
   const [showFeatureModal, setShowFeatureModal] = useState(false)
+  const emailInput = useRef(null)
   const ENTER_KEYS = ['13', 'Enter']
 
   const createEvent = (selectionInfo) => {
@@ -157,6 +160,9 @@ function App() {
             }}
             onClick={() => {
               setShowFeatureModal(true)
+              setTimeout(() => {
+                emailInput.current.focus()
+              }, 100)
             }}>
             Request a feature
           </Link>
@@ -190,6 +196,8 @@ function App() {
         onClose={() => {
           setShowFeatureModal(false)
         }}
+        autoFocus={false}
+        disableEnforceFocus
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <Box sx={modalBoxStyle}>
@@ -198,16 +206,37 @@ function App() {
             variant="h6"
             component="h2"
             style={{ marginBottom: 5 }}>
-            Request a feature
+            <span className="request-feature-title">Request a feature</span>
+            <IconButton
+              onClick={() => setShowFeatureModal(false)}
+              sx={{ p: 0 }}
+              className="close-icon-wrapper">
+              <CloseIcon sx={{ p: 0 }} className="close-icon" />
+            </IconButton>
           </Typography>
           <TextField
-            id="outlined-multiline-static"
+            id="email-textfield"
+            style={{
+              width: '100%',
+            }}
+            rows={4}
+            variant="outlined"
+            placeholder="example@gmail.com"
+            label="Your email - we'll let you know when the feature is ready"
+            autoFocus
+            margin="normal"
+            inputRef={emailInput}
+          />
+          <TextField
+            id="feature-request-message-textfield"
             multiline
             style={{
               width: '100%',
             }}
             rows={4}
+            label="Message"
             placeholder="It would be awesome if you add a feature to..."
+            required
           />
           <Box
             sx={{

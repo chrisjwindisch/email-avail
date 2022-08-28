@@ -17,7 +17,7 @@ Drag select available times and click enter to save to clipboard
 - Currently trying to get react-firebase-auth to work with the project but its looking for index.tsx, might need to use a different package
 - Hook up to FB Auth
 
-1. Request Feature Lambda
+1. Request Feature frontend
 2. Get /create-account w/firebase working
 3. Get /login w/firebase working
    3.5 /logout
