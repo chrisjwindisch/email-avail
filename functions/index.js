@@ -1,41 +1,41 @@
-const functions = require('firebase-functions')
-const sgMail = require('@sendgrid/mail')
+const functions = require("firebase-functions");
+const sgMail = require("@sendgrid/mail");
 
 exports.requestFeature = functions.https.onRequest((request, response) => {
-  const res = {}
+  const res = {};
 
   try {
-    if (request.method !== 'POST') {
-      throw new Error('Unsupported method')
+    if (request.method !== "POST") {
+      throw new Error("Unsupported method");
     }
     const message = `
     Email: ${request.body.email}
     Message Body:
       ${request.body.message}
-    `
-    //@TODO: Add user's email as reply-to
+    `;
+    // @TODO: Add user's email as reply-to
 
-    var sendMail = async function () {
-      sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+    const sendMail = async function() {
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
       const msg = {
-        to: 'chrisjwindisch@gmail.com',
-        from: 'cjdevbootstrap+from@gmail.com',
-        subject: 'Email-avail Feature Request',
+        to: "chrisjwindisch@gmail.com",
+        from: "cjdevbootstrap+from@gmail.com",
+        subject: "Email-avail Feature Request",
         text: message,
-      }
+      };
 
-      const sgResult = await sgMail.send(msg)
-      console.log(sgResult)
-    }
+      const sgResult = await sgMail.send(msg);
+      console.log(sgResult);
+    };
 
-    sendMail()
+    sendMail();
 
-    res.success = true
+    res.success = true;
   } catch (error) {
-    res.success = false
-    res.error = error
-    response.status(400)
+    res.success = false;
+    res.error = error;
+    response.status(400);
   } finally {
-    response.json(res)
+    response.json(res);
   }
-})
+});

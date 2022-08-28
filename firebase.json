@@ -8,6 +8,11 @@
     ],
     "rewrites": [
       {
+        "source": "/requestFeature",
+        "function": "requestFeature",
+        "region": "us-central1"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

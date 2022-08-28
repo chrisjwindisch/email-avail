@@ -26,6 +26,7 @@ Drag select available times and click enter to save to clipboard
    6.1 /home for displaying default calendar's first 3 weeks if user is logged in
    6.5 preloading logic for +3 weeks of events
 7. Change calendar drop down
+8. Put Sendgrid API Key in Google Secret
 --------- 
 8. Put on CDN and optimize cache settings so its instantaneous to load, otherwise it'd be faster to type
 9. Cache the entire calendar API call in local storage so it loads in target sub 50ms (then update it after login with latest calendar sync)

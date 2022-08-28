@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom'
 import { Autocomplete, Box, Button, Modal, TextField, Typography } from '@mui/material'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
+import { api } from './Config'
 
 // From: https://thewebdev.info/2021/05/24/how-to-listen-for-key-press-for-document-in-react-js/#:~:text=js-,To%20listen%20for%20keypresses%20on%20the%20whole%20document%20in%20React,document%20in%20the%20useEffect%20hook.&text=We%20create%20the%20useEventListener%20hook,eventName%20is%20the%20event%20name.
 const useEventListener = (eventName, handler, element = window) => {
@@ -43,6 +44,13 @@ function App() {
   const emailInput = useRef(null)
   const ENTER_KEYS = ['13', 'Enter']
 
+  const defaultValues = {
+    email: '',
+    message: '',
+  }
+
+  const [formValues, setFormValues] = useState(defaultValues)
+
   const createEvent = (selectionInfo) => {
     const start = selectionInfo.start
     const end = selectionInfo.end
@@ -56,6 +64,14 @@ function App() {
     newEvent.allDay = allDay
     const newEvents = events.concat([newEvent])
     setEvents(newEvents)
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    })
   }
 
   const handler = ({ key }) => {
@@ -133,8 +149,27 @@ function App() {
   const timezones = moment.tz.names()
 
   const onChangeTimezone = (event, value) => {
-    console.log('setTimezone')
+    console.log('setTimezone', event)
     setTimezone(value)
+  }
+
+  const onSubmitFeatureRequest = async () => {
+    setShowFeatureModal(false)
+    const response = await fetch(api('requestFeature'), {
+      method: 'POST',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formValues),
+    })
+    const res = response.json() // parses JSON response into native JavaScript objects
+    if (res.success === true) {
+      NotificationManager.success('Feature Requeset Submitted', 'Thank You!')
+    } else {
+      NotificationManager.error('Error submitting feature request, please try again.', 'Error')
+    }
   }
 
   return (
@@ -226,6 +261,8 @@ function App() {
             autoFocus
             margin="normal"
             inputRef={emailInput}
+            name="email"
+            onChange={handleInputChange}
           />
           <TextField
             id="feature-request-message-textfield"
@@ -237,6 +274,8 @@ function App() {
             label="Message"
             placeholder="It would be awesome if you add a feature to..."
             required
+            name="message"
+            onChange={handleInputChange}
           />
           <Box
             sx={{
@@ -244,13 +283,7 @@ function App() {
               flexDirection: 'row-reverse',
               marginTop: 2,
             }}>
-            <Button
-              onClick={() => {
-                setShowFeatureModal(false)
-                NotificationManager.success('Feature Requeset Submitted', 'Thank You!')
-              }}>
-              Submit
-            </Button>
+            <Button onClick={onSubmitFeatureRequest}>Submit</Button>
           </Box>
         </Box>
       </Modal>
